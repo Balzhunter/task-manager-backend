@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Admin User',
             'email' => 'admin@example.com',
             'is_admin' => true,
-            'password' => Hash::make('password')
+            'password' => Hash::make('3j3mpl02024')
         ]);
     }
 }
