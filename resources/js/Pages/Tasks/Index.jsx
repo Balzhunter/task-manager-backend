@@ -1,10 +1,11 @@
 import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
+import Task from "@/Components/Task";
 import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, useForm } from "@inertiajs/react";
 
-export default function Index({ auth }) {
+export default function Index({ auth, tasks }) {
     const { data, setData, post, processing, reset, errors } = useForm({
         title: "",
         description: "",
@@ -53,6 +54,11 @@ export default function Index({ auth }) {
                         Crear Tarea
                     </PrimaryButton>
                 </form>
+                <div className="mt-6 bg-white shadow-sm rounded-lg divide-y">
+                    {tasks.map((task) => (
+                        <Task key={task.id} task={task} />
+                    ))}
+                </div>
             </div>
         </AuthenticatedLayout>
     );

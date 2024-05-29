@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTaskRequest;
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class TaskController extends Controller
@@ -14,8 +15,13 @@ class TaskController extends Controller
      */
     public function index()
     {
+        if (Auth::user()->is_admin) {
+            return Inertia::render('Tasks/Index', [
+                'tasks' => Task::with('user:id,name')->latest()->get()
+            ]);
+        }
         return Inertia::render('Tasks/Index', [
-            //
+            'tasks' => Task::all()->where('user_id', Auth::user()->id),
         ]);
     }
 
