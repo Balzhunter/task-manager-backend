@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('description');
             $table->string('expiration_date');
-            $table->boolean('is_complete');
+            $table->boolean('is_complete')->default(false);
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
