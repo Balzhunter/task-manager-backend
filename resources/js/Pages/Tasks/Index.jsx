@@ -56,7 +56,7 @@ export default function Index({ auth, tasks }) {
                 </form>
                 <div className="mt-6 bg-white shadow-sm rounded-lg divide-y">
                     {tasks.map((task) => (
-                        <Task key={task.id} task={task} />
+                        <Task key={task.task_id} task={task} />
                     ))}
                 </div>
             </div>

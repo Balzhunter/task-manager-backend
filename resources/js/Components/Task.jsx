@@ -1,10 +1,10 @@
 import { usePage } from "@inertiajs/react";
 
-export default function Task({ task }) {
+export default function Task({ task, ...props }) {
     const { auth } = usePage().props;
 
     return (
-        <div className="p-2 flex">
+        <div {...props} className="p-2 flex">
             <div className="flex-1">
                 <div className="flex justify-between items-center">
                     <span className="text-gray-800 font-bold">
