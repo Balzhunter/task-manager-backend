@@ -107,7 +107,7 @@ Body
 
 ### UpdateTasks
 
-PUT http://localhost:8000/api/tasks
+PUT http://localhost:8000/api/tasks/{id}
 
 ```
 Headers
