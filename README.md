@@ -34,3 +34,103 @@
 6. Run build `npm run build `
 7. Run server `php artisan serve`
 8. Open other terminal and run `npm run dev` for hot reloading
+
+## Consume API
+
+### Register
+
+POST http://localhost:8000/api/register
+
+```
+Headers
+   "Accept": "application/json"
+form-encoded
+  "name": "BalvirHunt2",
+  "email": "balvirp3@gmail.com"
+  "password": "12345678"
+  "password_confirmation": "12345678"
+```
+
+### Login
+
+POST http://localhost:8000/api/login
+
+```
+Headers
+   "Accept": "application/json"
+form-encoded
+  "name": "BalvirHunt2",
+  "password": "12345678"
+```
+
+### Logout
+
+POST http://localhost:8000/api/studentscriteria
+
+```
+Headers
+   "Accept": "application/json"
+Auth Bearer
+   Bearer token example
+   1|NKeHisN9Jv3Q5Qv4IQkFWLaMvVgeRw6LWnoBDiqx918fd359
+```
+
+### GetTasks
+
+GET http://localhost:8000/api/tasks
+
+```
+Headers
+   "Accept": "application/json"
+Auth Bearer
+   Bearer token example
+   1|NKeHisN9Jv3Q5Qv4IQkFWLaMvVgeRw6LWnoBDiqx918fd359
+```
+
+### CreateTasks
+
+POST http://localhost:8000/api/tasks
+
+```
+Headers
+   "Accept": "application/json"
+Auth Bearer
+   Bearer token example
+   1|NKeHisN9Jv3Q5Qv4IQkFWLaMvVgeRw6LWnoBDiqx918fd359
+Body
+   {
+      "title": "one title 4",
+      "description": "one description",
+      "expiration_date": "30-05-2024"
+   }
+```
+
+### UpdateTasks
+
+PUT http://localhost:8000/api/tasks
+
+```
+Headers
+   "Accept": "application/json"
+Auth Bearer
+   Bearer token example
+   1|NKeHisN9Jv3Q5Qv4IQkFWLaMvVgeRw6LWnoBDiqx918fd359
+Body
+   {
+      "title": "one title 4",
+      "expiration_date": "30-05-2024",
+      "is_complete": true
+   }
+```
+
+### DeleteTasks
+
+DELETE http://localhost:8000/api/tasks/{id}
+
+```
+Headers
+   "Accept": "application/json"
+Auth Bearer
+   Bearer token example
+   1|NKeHisN9Jv3Q5Qv4IQkFWLaMvVgeRw6LWnoBDiqx918fd359
+```
