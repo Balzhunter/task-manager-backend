@@ -66,7 +66,7 @@ export default function Index({ auth, tasks }) {
             <div className="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
                 <Search />
                 <div className="flex justify-around mt-6">
-                    <InputLabel for="no_completados">
+                    <InputLabel htmlFor="no_completados">
                         <Checkbox
                             id="no_completados"
                             checked={unCompleted}
@@ -74,7 +74,7 @@ export default function Index({ auth, tasks }) {
                         />
                         No Completados
                     </InputLabel>
-                    <InputLabel for="completados">
+                    <InputLabel htmlFor="completados">
                         <Checkbox
                             id="completados"
                             checked={completed}
@@ -178,7 +178,7 @@ export default function Index({ auth, tasks }) {
                         }
                         return <></>;
                     })}
-                    {/* <Pagination pagination={tasks} /> */}
+                    <Pagination pagination={tasks} />
                 </div>
             </div>
         </AuthenticatedLayout>
