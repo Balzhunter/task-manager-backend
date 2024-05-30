@@ -9,9 +9,28 @@
 
 ## Run Laravel with SQLite
 
-1. `composer install`
-2. `php artisan migrate`
-3. `php artisan db:seed`
-4. `npm install`
-5. `npm run build `
-6. `php artisan serve`
+1. Install composer `composer install`
+2. Run migrations `php artisan migrate`
+3. Run seeds `php artisan db:seed`
+4. Install node and then run `npm install`
+5. Run build `npm run build `
+6. Run server `php artisan serve`
+7. Open other terminal and run `npm run dev` for hot reloading
+
+## Run Laravel with MySQL
+
+1. Change env DB_CONNECTION=mysql and uncomment:
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=laravel
+   DB_USERNAME=root
+   DB_PASSWORD=
+   to put your database credentials.
+
+2. Install composer `composer install`
+3. Run migrations `php artisan migrate`
+4. Run seeds `php artisan db:seed`
+5. Install node and then run `npm install`
+6. Run build `npm run build `
+7. Run server `php artisan serve`
+8. Open other terminal and run `npm run dev` for hot reloading
