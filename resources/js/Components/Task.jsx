@@ -1,28 +1,89 @@
 import { useForm, usePage } from "@inertiajs/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Dropdown from "./Dropdown";
 import InputError from "./InputError";
 import PrimaryButton from "./PrimaryButton";
+import Checkbox from "./Checkbox";
 
 export default function Task({ task, onEdit, ...props }) {
     const { auth } = usePage().props;
 
-    // const { data, setData, patch, clearErrors, reset, errors } = useForm({
-    //     message: task.message,
-    // });
+    const { data, setData, patch, clearErrors, reset, errors } = useForm({
+        is_complete: task.is_complete,
+    });
+    console.log("iscomplete", task.is_complete);
 
-    // const submit = (e) => {
-    //     e.preventDefault();
-    //     patch(route("tasks.update", task.task_id), {
-    //         onSuccess: () => setEditing(false),
-    //     });
+    // const checkOrUncheck = (e) => {
+    //     // e.preventDefault();
+    //     setData("is_complete", !e.target.checked);
+    //     // patch(route("tasks.update", task.task_id), {
+    //     //     onSuccess: () => {
+    //     //         clearErrors();
+    //     //     },
+    //     // });
     // };
+    //Create a checkbox for the task that triggered the update
+    // const checkOrUncheck = (e) => {
+    //     // e.preventDefault();
+    //     console.log(e.target.checked);
+    //     patch(
+    //         route("tasks.update", task.task_id, {
+    //             is_complete: !e.target.checked,
+    //         }),
+    //         {
+    //             onSuccess: () => {
+    //                 clearErrors();
+    //             },
+    //         }
+    //     );
+    // };
+
+    const submitEdit = (e, task_id, check) => {
+        e.preventDefault();
+        console.log(isChecked);
+        patch(route("tasks.update", task_id, { is_complete: check }), {
+            onSuccess: () => {
+                reset();
+                clearErrors();
+            },
+        });
+    };
+    const [isChecked, setIsChecked] = useState(task.is_complete);
+
+    const checkHandler = () => {
+        setIsChecked(!isChecked);
+    };
+
+    // useEffect(() => {
+    //     patch(
+    //         route("tasks.update", task.task_id, {
+    //             is_complete: !isChecked,
+    //         }),
+    //         {
+    //             onSuccess: () => {
+    //                 clearErrors();
+    //             },
+    //         }
+    //     );
+    // }, [isChecked, task.task_id]);
 
     return (
         <div {...props} className="p-2 flex">
             <div className="flex-1">
                 <div className="flex justify-between items-center">
                     <span className="text-gray-800 font-bold">
+                        <form
+                            onChange={(e) =>
+                                submitEdit(e, task.task_id, isChecked)
+                            }
+                        >
+                            <input
+                                type="checkbox"
+                                className="mr-2"
+                                checked={isChecked}
+                                onChange={checkHandler}
+                            />
+                        </form>
                         {task.title}
                     </span>
                     {auth.user.is_admin && (
