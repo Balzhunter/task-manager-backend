@@ -16,12 +16,13 @@
 1. Install with composer `composer install` if you don't have remember to install it.
 2. Create env file with env.example
 3. And remember to generate your key: `php artisan key:generate`
-4. Run migrations `php artisan migrate`
+4. Run migrations `php artisan migrate` the program will ask to create sqlite database type "yes"
 5. Run seeds `php artisan db:seed`
 6. Install node and then run `npm install`
 7. Run build `npm run build `
 8. Run server `php artisan serve`
 9. Open other terminal and run `npm run dev` for hot reloading
+10. Open the link http://127.0.0.1:8000/ that was provided on the first command line.
 
 ## Run Laravel with MySQL
 
@@ -45,6 +46,7 @@
 7. Run build `npm run build `
 8. Run server `php artisan serve`
 9. Open other terminal and run `npm run dev` for hot reloading
+10. Open the link http://127.0.0.1:8000/ that was provided on the first command line.
 
 ## Consume API
 
