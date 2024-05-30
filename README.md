@@ -37,14 +37,14 @@
    DB_PASSWORD=
    to put your database credentials.
 
-1. Install with composer `composer install` if you don't have remember to install it.
-1. And remember to generate your key: `php artisan key:generate`
-1. Run migrations `php artisan migrate`
-1. Run seeds `php artisan db:seed`
-1. Install node and then run `npm install`
-1. Run build `npm run build `
-1. Run server `php artisan serve`
-1. Open other terminal and run `npm run dev` for hot reloading
+2. Install with composer `composer install` if you don't have remember to install it.
+3. And remember to generate your key: `php artisan key:generate`
+4. Run migrations `php artisan migrate`
+5. Run seeds `php artisan db:seed`
+6. Install node and then run `npm install`
+7. Run build `npm run build `
+8. Run server `php artisan serve`
+9. Open other terminal and run `npm run dev` for hot reloading
 
 ## Consume API
 
