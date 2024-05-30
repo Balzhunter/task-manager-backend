@@ -20,8 +20,9 @@ class TaskController extends Controller
                 'tasks' => Task::with('user:id,name')->latest()->get()
             ]);
         }
+
         return Inertia::render('Tasks/Index', [
-            'tasks' => Task::all()->where('user_id', Auth::user()->id),
+            'tasks' => Task::where('user_id', Auth::user()->id)->get()
         ]);
     }
 
