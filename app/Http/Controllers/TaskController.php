@@ -27,8 +27,10 @@ class TaskController extends Controller
     public function indexApi(Request $request)
     {
         $tasks = TaskService::index($request);
-        return 'Hello World';
-        // return response()->json(TaskResource::collection($tasks));
+        // return 'Hello World';
+        return response()->json([
+            'tasks' => TaskResource::collection($tasks)
+        ], 200);
         // return 'hello world';
     }
 
