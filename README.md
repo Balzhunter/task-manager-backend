@@ -9,6 +9,10 @@
 
 ## Run Laravel with SQLite
 
+0. Clone this repository git clone
+   `git@github.com:Balzhunter/task-manager-full-stack.git`
+   and enter to the project directory
+   `cd .\task-manager-full-stack\`
 1. Install composer `composer install`
 2. Create env file with env.example
 3. And remember to generate your key: `php artisan key:generate`
@@ -21,6 +25,10 @@
 
 ## Run Laravel with MySQL
 
+0. Clone this repository git clone
+   `git@github.com:Balzhunter/task-manager-full-stack.git`
+   and enter to the project directory
+   `cd .\task-manager-full-stack\`
 1. Create env file with env.example and replace DB_CONNECTION=mysql and uncomment:
    DB_HOST=127.0.0.1
    DB_PORT=3306
