@@ -10,16 +10,18 @@
 ## Run Laravel with SQLite
 
 1. Install composer `composer install`
-2. Run migrations `php artisan migrate`
-3. Run seeds `php artisan db:seed`
-4. Install node and then run `npm install`
-5. Run build `npm run build `
-6. Run server `php artisan serve`
-7. Open other terminal and run `npm run dev` for hot reloading
+2. Create env file with env.example
+3. And remember to generate your key: `php artisan key:generate`
+4. Run migrations `php artisan migrate`
+5. Run seeds `php artisan db:seed`
+6. Install node and then run `npm install`
+7. Run build `npm run build `
+8. Run server `php artisan serve`
+9. Open other terminal and run `npm run dev` for hot reloading
 
 ## Run Laravel with MySQL
 
-1. Change env DB_CONNECTION=mysql and uncomment:
+1. Create env file with env.example and replace DB_CONNECTION=mysql and uncomment:
    DB_HOST=127.0.0.1
    DB_PORT=3306
    DB_DATABASE=laravel
@@ -28,12 +30,13 @@
    to put your database credentials.
 
 2. Install composer `composer install`
-3. Run migrations `php artisan migrate`
-4. Run seeds `php artisan db:seed`
-5. Install node and then run `npm install`
-6. Run build `npm run build `
-7. Run server `php artisan serve`
-8. Open other terminal and run `npm run dev` for hot reloading
+3. And remember to generate your key: `php artisan key:generate`
+4. Run migrations `php artisan migrate`
+5. Run seeds `php artisan db:seed`
+6. Install node and then run `npm install`
+7. Run build `npm run build `
+8. Run server `php artisan serve`
+9. Open other terminal and run `npm run dev` for hot reloading
 
 ## Consume API
 
