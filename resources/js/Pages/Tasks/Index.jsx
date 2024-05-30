@@ -1,4 +1,5 @@
 import InputError from "@/Components/InputError";
+import Pagination from "@/Components/Pagination";
 import PrimaryButton from "@/Components/PrimaryButton";
 import Task from "@/Components/Task";
 import TextInput from "@/Components/TextInput";
@@ -50,6 +51,8 @@ export default function Index({ auth, tasks }) {
         });
         setEditing(true);
     };
+
+    console.log(tasks);
 
     return (
         <AuthenticatedLayout user={auth.user}>
@@ -134,13 +137,14 @@ export default function Index({ auth, tasks }) {
                     </form>
                 )}
                 <div className="mt-6 bg-white shadow-sm rounded-lg divide-y">
-                    {tasks.map((task) => (
+                    {tasks.data.map((task) => (
                         <Task
                             key={task.task_id}
                             task={task}
                             onEdit={handleEdit}
                         />
                     ))}
+                    {/* <Pagination pagination={tasks} /> */}
                 </div>
             </div>
         </AuthenticatedLayout>

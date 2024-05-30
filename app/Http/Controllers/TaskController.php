@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\PaginationHelper;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use App\Http\Resources\TaskResource;
+use App\Http\Resources\UserResource;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,13 +21,29 @@ class TaskController extends Controller
     public function index()
     {
         if (Auth::user()->is_admin) {
+            $tasks = Task::with('user:id,name')->latest()->get();
+
+            $tasks = PaginationHelper::paginate($tasks, 1);
+            // dd($tasks);
             return Inertia::render('Tasks/Index', [
-                'tasks' => Task::with('user:id,name')->latest()->get()
+                'tasks' => TaskResource::collection($tasks)
+            ]);
+        }
+        // dd(Task::with('user:id,name')->latest()->get());
+        // dd(Task::paginate(2)->through(function ($item) {
+        //     return [
+        //         'task_id' => $item->task_id,
+        //         'title' => $item->title,
+        //     ];
+        // }));
+        if (Auth::user()->is_admin) {
+            return Inertia::render('Tasks/Index', [
+                'tasks' => Task::paginate(2)->get()
             ]);
         }
 
         return Inertia::render('Tasks/Index', [
-            'tasks' => Task::where('user_id', Auth::user()->id)->get()
+            'tasks' => Task::where('user_id', Auth::user()->id)->get()->paginate(2)
         ]);
     }
 
