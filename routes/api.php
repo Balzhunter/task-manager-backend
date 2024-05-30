@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Route;
 //     ->only(['indexApi']);
 // Route::get('/tasks', [TaskController::class, 'indexApi']);
 Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout']);
+
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/tasks', [TaskController::class, 'indexApi']);
     Route::post('/tasks', [TaskController::class, 'storeApi']);
