@@ -87,7 +87,9 @@ export default function Task({ task, onEdit, ...props }) {
                         {task.title}
                     </span>
                     {auth.user.is_admin && (
-                        <span className="text-gray-800">{task.user.name}</span>
+                        <span className="text-sky-800 font-semibold">
+                            {task.user.name}
+                        </span>
                     )}
                     <small className="ml-2 text-sm text-gray-600">
                         Expiración:{" "}

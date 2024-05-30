@@ -71,7 +71,7 @@ export default function Index({ auth, tasks }) {
                             id="no_completados"
                             checked={unCompleted}
                             onChange={() => setUnCompleted(!unCompleted)}
-                        />
+                        />{" "}
                         No Completados
                     </InputLabel>
                     <InputLabel htmlFor="completados">
@@ -79,7 +79,7 @@ export default function Index({ auth, tasks }) {
                             id="completados"
                             checked={completed}
                             onChange={() => setCompleted(!completed)}
-                        />
+                        />{" "}
                         Completados
                     </InputLabel>
                 </div>
