@@ -60,6 +60,13 @@ export default function Task({ task, onEdit, ...props }) {
                     >
                         Edit
                     </button>
+                    <Dropdown.Link
+                        as="button"
+                        href={route("tasks.destroy", task.task_id)}
+                        method="delete"
+                    >
+                        Delete
+                    </Dropdown.Link>
                 </Dropdown.Content>
             </Dropdown>
             {/* {false ? (
