@@ -28,7 +28,7 @@ class TaskService
 
         $tasks = $request->user()->tasks()->when($request->term, function ($query, $term) {
             $query->where('title', 'LIKE', '%' . $term . '%')->orWhere('description', 'LIKE', '%' . $term . '%');
-        })->get();
+        })->where('user_id', $request->user()->id)->get();
 
         $tasks = PaginationHelper::paginate($tasks, $PAGINATION);
         return $tasks;
