@@ -20,30 +20,21 @@ class TaskController extends Controller
      */
     public function index()
     {
+        $PAGINATION = 2;
         if (Auth::user()->is_admin) {
             $tasks = Task::with('user:id,name')->latest()->get();
 
-            $tasks = PaginationHelper::paginate($tasks, 1);
-            // dd($tasks);
+            $tasks = PaginationHelper::paginate($tasks, $PAGINATION);
             return Inertia::render('Tasks/Index', [
                 'tasks' => TaskResource::collection($tasks)
             ]);
         }
-        // dd(Task::with('user:id,name')->latest()->get());
-        // dd(Task::paginate(2)->through(function ($item) {
-        //     return [
-        //         'task_id' => $item->task_id,
-        //         'title' => $item->title,
-        //     ];
-        // }));
-        if (Auth::user()->is_admin) {
-            return Inertia::render('Tasks/Index', [
-                'tasks' => Task::paginate(2)->get()
-            ]);
-        }
+
+        $tasks = Task::where('user_id', Auth::user()->id)->get();
+        $tasks = PaginationHelper::paginate($tasks, $PAGINATION);
 
         return Inertia::render('Tasks/Index', [
-            'tasks' => Task::where('user_id', Auth::user()->id)->get()->paginate(2)
+            'tasks' => TaskResource::collection($tasks)
         ]);
     }
 
