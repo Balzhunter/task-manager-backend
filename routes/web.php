@@ -26,7 +26,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('tasks', TaskController::class)
-    ->only(['index', 'store', 'update', 'destroy'])
+    ->only(['index', 'store', 'update', 'destroy', 'search'])
     ->middleware(['auth', 'verified']);
 
 require __DIR__ . '/auth.php';
