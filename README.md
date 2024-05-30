@@ -65,7 +65,7 @@ form-encoded
 
 ### Logout
 
-POST http://localhost:8000/api/studentscriteria
+POST http://localhost:8000/api/logout
 
 ```
 Headers
