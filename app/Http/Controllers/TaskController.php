@@ -15,24 +15,28 @@ use Inertia\Inertia;
 
 class TaskController extends Controller
 {
+    private $PAGINATION = 10;
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $PAGINATION = 10;
         if (Auth::user()->is_admin) {
-            $tasks = Task::with('user:id,name')->latest()->get();
+            $tasks = Task::with('user:id,name')->when($request->term, function ($query, $term) {
+                $query->where('title', 'LIKE', '%' . $term . '%')->orWhere('description', 'LIKE', '%' . $term . '%');
+            })->latest()->get();
 
-            $tasks = PaginationHelper::paginate($tasks, $PAGINATION);
+            $tasks = PaginationHelper::paginate($tasks, $this->PAGINATION);
             return Inertia::render('Tasks/Index', [
                 'tasks' => TaskResource::collection($tasks)
             ]);
         }
 
-        $tasks = Task::where('user_id', Auth::user()->id)->get();
-        $tasks = PaginationHelper::paginate($tasks, $PAGINATION);
+        $tasks = $request->user()->tasks()->when($request->term, function ($query, $term) {
+            $query->where('title', 'LIKE', '%' . $term . '%')->orWhere('description', 'LIKE', '%' . $term . '%');
+        })->get();
 
+        $tasks = PaginationHelper::paginate($tasks, $this->PAGINATION);
         return Inertia::render('Tasks/Index', [
             'tasks' => TaskResource::collection($tasks)
         ]);
