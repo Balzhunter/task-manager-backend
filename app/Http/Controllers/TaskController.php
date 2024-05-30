@@ -20,7 +20,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $PAGINATION = 2;
+        $PAGINATION = 10;
         if (Auth::user()->is_admin) {
             $tasks = Task::with('user:id,name')->latest()->get();
 
