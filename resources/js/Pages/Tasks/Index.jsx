@@ -7,6 +7,8 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, useForm } from "@inertiajs/react";
 import { useState } from "react";
 import Search from "./Search";
+import Checkbox from "@/Components/Checkbox";
+import InputLabel from "@/Components/InputLabel";
 
 export default function Index({ auth, tasks }) {
     const {
@@ -53,12 +55,33 @@ export default function Index({ auth, tasks }) {
         setEditing(true);
     };
 
-    console.log(tasks);
+    const [unCompleted, setUnCompleted] = useState(true);
+    const [completed, setCompleted] = useState(true);
 
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Tasks" />
-            <Search />
+            <div className="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
+                <Search />
+                <div className="flex justify-around mt-6">
+                    <InputLabel htmlFor="no_completados">
+                        <Checkbox
+                            id="no_completados"
+                            checked={unCompleted}
+                            onChange={() => setUnCompleted(!unCompleted)}
+                        />{" "}
+                        No Completados
+                    </InputLabel>
+                    <InputLabel htmlFor="completados">
+                        <Checkbox
+                            id="completados"
+                            checked={completed}
+                            onChange={() => setCompleted(!completed)}
+                        />{" "}
+                        Completados
+                    </InputLabel>
+                </div>
+            </div>
             <div className="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
                 {editing ? (
                     <form onSubmit={(e) => submitEdit(e, data.task_id)}>
@@ -138,14 +161,22 @@ export default function Index({ auth, tasks }) {
                     </form>
                 )}
                 <div className="mt-6 bg-white shadow-sm rounded-lg divide-y">
-                    {tasks.data.map((task) => (
-                        <Task
-                            key={task.task_id}
-                            task={task}
-                            onEdit={handleEdit}
-                        />
-                    ))}
-                    {/* <Pagination pagination={tasks} /> */}
+                    {tasks.data.map((task) => {
+                        if (
+                            (completed && task.is_complete) ||
+                            (unCompleted && !task.is_complete)
+                        ) {
+                            return (
+                                <Task
+                                    key={task.task_id}
+                                    task={task}
+                                    onEdit={handleEdit}
+                                />
+                            );
+                        }
+                        return <></>;
+                    })}
+                    <Pagination pagination={tasks} />
                 </div>
             </div>
         </AuthenticatedLayout>

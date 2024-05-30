@@ -17,6 +17,7 @@ class UpdateTaskRequest extends FormRequest
             'title' => 'string|max:255',
             'description' => 'string|max:255',
             'expiration_date' => 'date',
+            'is_complete' => 'boolean'
         ];
     }
 }

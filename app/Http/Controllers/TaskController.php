@@ -2,52 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\PaginationHelper;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Http\Resources\TaskResource;
-use App\Http\Resources\UserResource;
 use App\Models\Task;
+use App\Services\TaskService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
+use PhpParser\Node\Stmt\Return_;
 
 class TaskController extends Controller
 {
-    private $PAGINATION = 10;
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        if (Auth::user()->is_admin) {
-            $tasks = Task::with('user:id,name')->when($request->term, function ($query, $term) {
-                $query->where('title', 'LIKE', '%' . $term . '%')->orWhere('description', 'LIKE', '%' . $term . '%');
-            })->latest()->get();
-
-            $tasks = PaginationHelper::paginate($tasks, $this->PAGINATION);
-            return Inertia::render('Tasks/Index', [
-                'tasks' => TaskResource::collection($tasks)
-            ]);
-        }
-
-        $tasks = $request->user()->tasks()->when($request->term, function ($query, $term) {
-            $query->where('title', 'LIKE', '%' . $term . '%')->orWhere('description', 'LIKE', '%' . $term . '%');
-        })->get();
-
-        $tasks = PaginationHelper::paginate($tasks, $this->PAGINATION);
+        $tasks = TaskService::index($request);
         return Inertia::render('Tasks/Index', [
             'tasks' => TaskResource::collection($tasks)
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function indexApi(Request $request)
     {
-        //
+        $tasks = TaskService::index($request);
+        // return 'Hello World';
+        return response()->json([
+            'tasks' => TaskResource::collection($tasks)
+        ], 200);
+        // return 'hello world';
     }
 
     /**
@@ -55,27 +39,14 @@ class TaskController extends Controller
      */
     public function store(StoreTaskRequest $request)
     {
-        $validated = $request->validated();
-
-        $request->user()->tasks()->create($validated);
-
+        TaskService::store($request);
         return redirect(route('tasks.index'));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Task $task)
+    public function storeApi(StoreTaskRequest $request)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Task $task)
-    {
-        //
+        $task = TaskService::store($request);
+        return response()->json(['task' => $task], 201);
     }
 
     /**
@@ -83,13 +54,15 @@ class TaskController extends Controller
      */
     public function update(UpdateTaskRequest $request, Task $task)
     {
-        Gate::authorize('update', $task);
-
-        $validated = $request->validated();
-
-        $task->update($validated);
-
+        TaskService::update($request, $task);
         return redirect(route('tasks.index'));
+    }
+
+    public function updateApi(UpdateTaskRequest $request, int $id)
+    {
+        $task = Task::find($id);
+        $task = TaskService::update($request, $task);
+        return response()->json(['task' => $task], 200);
     }
 
     /**
@@ -97,10 +70,14 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        Gate::authorize('delete', $task);
-
-        $task->delete();
-
+        TaskService::destroy($task);
         return redirect(route('tasks.index'));
+    }
+
+    public function destroyApi(int $id)
+    {
+        $task = Task::find($id);
+        TaskService::destroy($task);
+        return response()->json([], 204);
     }
 }
