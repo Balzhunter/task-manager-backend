@@ -7,18 +7,16 @@ import PrimaryButton from "./PrimaryButton";
 export default function Task({ task, onEdit, ...props }) {
     const { auth } = usePage().props;
 
-    const [editing, setEditing] = useState(false);
+    // const { data, setData, patch, clearErrors, reset, errors } = useForm({
+    //     message: task.message,
+    // });
 
-    const { data, setData, patch, clearErrors, reset, errors } = useForm({
-        message: task.message,
-    });
-
-    const submit = (e) => {
-        e.preventDefault();
-        patch(route("tasks.update", task.task_id), {
-            onSuccess: () => setEditing(false),
-        });
-    };
+    // const submit = (e) => {
+    //     e.preventDefault();
+    //     patch(route("tasks.update", task.task_id), {
+    //         onSuccess: () => setEditing(false),
+    //     });
+    // };
 
     return (
         <div {...props} className="p-2 flex">
@@ -64,7 +62,7 @@ export default function Task({ task, onEdit, ...props }) {
                     </button>
                 </Dropdown.Content>
             </Dropdown>
-            {editing ? (
+            {/* {false ? (
                 <form onSubmit={submit}>
                     <textarea
                         value={data.message}
@@ -87,8 +85,9 @@ export default function Task({ task, onEdit, ...props }) {
                     </div>
                 </form>
             ) : (
-                <p className="mt-4 text-lg text-gray-900">{task.message}</p>
-            )}
+                <></>
+            )} */}
+            <p className="mt-4 text-lg text-gray-900">{task.message}</p>
         </div>
     );
 }
