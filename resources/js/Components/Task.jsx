@@ -1,88 +1,39 @@
 import { useForm, usePage } from "@inertiajs/react";
-import { useEffect, useState } from "react";
 import Dropdown from "./Dropdown";
-import InputError from "./InputError";
-import PrimaryButton from "./PrimaryButton";
 import Checkbox from "./Checkbox";
+import { useRef } from "react";
 
 export default function Task({ task, onEdit, ...props }) {
     const { auth } = usePage().props;
-
-    const { data, setData, patch, clearErrors, reset, errors } = useForm({
-        is_complete: task.is_complete,
+    const { patch, setData, data } = useForm({
+        is_complete: !!task.is_complete,
     });
-    console.log("iscomplete", task.is_complete);
-
-    // const checkOrUncheck = (e) => {
-    //     // e.preventDefault();
-    //     setData("is_complete", !e.target.checked);
-    //     // patch(route("tasks.update", task.task_id), {
-    //     //     onSuccess: () => {
-    //     //         clearErrors();
-    //     //     },
-    //     // });
-    // };
-    //Create a checkbox for the task that triggered the update
-    // const checkOrUncheck = (e) => {
-    //     // e.preventDefault();
-    //     console.log(e.target.checked);
-    //     patch(
-    //         route("tasks.update", task.task_id, {
-    //             is_complete: !e.target.checked,
-    //         }),
-    //         {
-    //             onSuccess: () => {
-    //                 clearErrors();
-    //             },
-    //         }
-    //     );
-    // };
-
-    const submitEdit = (e, task_id, check) => {
+    console.log("Task is complete", task.is_complete);
+    const submit = (e) => {
         e.preventDefault();
-        console.log(isChecked);
-        patch(route("tasks.update", task_id, { is_complete: check }), {
-            onSuccess: () => {
-                reset();
-                clearErrors();
-            },
-        });
-    };
-    const [isChecked, setIsChecked] = useState(task.is_complete);
-
-    const checkHandler = () => {
-        setIsChecked(!isChecked);
+        patch(route("tasks.update", { task: task.task_id }));
     };
 
-    // useEffect(() => {
-    //     patch(
-    //         route("tasks.update", task.task_id, {
-    //             is_complete: !isChecked,
-    //         }),
-    //         {
-    //             onSuccess: () => {
-    //                 clearErrors();
-    //             },
-    //         }
-    //     );
-    // }, [isChecked, task.task_id]);
+    const buttonRef = useRef();
 
     return (
         <div {...props} className="p-2 flex">
             <div className="flex-1">
                 <div className="flex justify-between items-center">
                     <span className="text-gray-800 font-bold">
-                        <form
-                            onChange={(e) =>
-                                submitEdit(e, task.task_id, isChecked)
-                            }
-                        >
-                            <input
-                                type="checkbox"
+                        <form onSubmit={submit}>
+                            <Checkbox
                                 className="mr-2"
-                                checked={isChecked}
-                                onChange={checkHandler}
+                                checked={!!data.is_complete}
+                                onChange={(e) => {
+                                    const is_complete = data.is_complete;
+                                    setData("is_complete", !is_complete);
+                                    setTimeout(() => {
+                                        buttonRef.current.click();
+                                    }, 100);
+                                }}
                             />
+                            <button ref={buttonRef}></button>
                         </form>
                         {task.title}
                     </span>
@@ -132,31 +83,6 @@ export default function Task({ task, onEdit, ...props }) {
                     </Dropdown.Link>
                 </Dropdown.Content>
             </Dropdown>
-            {/* {false ? (
-                <form onSubmit={submit}>
-                    <textarea
-                        value={data.message}
-                        onChange={(e) => setData("message", e.target.value)}
-                        className="mt-4 w-full text-gray-900 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                    ></textarea>
-                    <InputError message={errors.message} className="mt-2" />
-                    <div className="space-x-2">
-                        <PrimaryButton className="mt-4">Save</PrimaryButton>
-                        <button
-                            className="mt-4"
-                            onClick={() => {
-                                setEditing(false);
-                                reset();
-                                clearErrors();
-                            }}
-                        >
-                            Cancel
-                        </button>
-                    </div>
-                </form>
-            ) : (
-                <></>
-            )} */}
             <p className="mt-4 text-lg text-gray-900">{task.message}</p>
         </div>
     );
