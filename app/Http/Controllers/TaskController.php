@@ -43,7 +43,7 @@ class TaskController extends Controller
         return redirect(route('tasks.index'));
     }
 
-    public function storeApi(Request $request)
+    public function storeApi(StoreTaskRequest $request)
     {
         $task = TaskService::store($request);
         return response()->json(['task' => $task], 201);
