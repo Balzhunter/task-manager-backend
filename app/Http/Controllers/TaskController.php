@@ -9,6 +9,7 @@ use App\Models\Task;
 use App\Services\TaskService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use PhpParser\Node\Stmt\Return_;
 
 class TaskController extends Controller
 {
@@ -23,6 +24,14 @@ class TaskController extends Controller
         ]);
     }
 
+    public function indexApi(Request $request)
+    {
+        $tasks = TaskService::index($request);
+        return 'Hello World';
+        // return response()->json(TaskResource::collection($tasks));
+        // return 'hello world';
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -30,6 +39,12 @@ class TaskController extends Controller
     {
         TaskService::store($request);
         return redirect(route('tasks.index'));
+    }
+
+    public function storeApi(Request $request)
+    {
+        $task = TaskService::store($request);
+        return response()->json(['task' => $task], 201);
     }
 
     /**
@@ -41,6 +56,13 @@ class TaskController extends Controller
         return redirect(route('tasks.index'));
     }
 
+    public function updateApi(UpdateTaskRequest $request, int $id)
+    {
+        $task = Task::find($id);
+        $task = TaskService::update($request, $task);
+        return response()->json(['task' => $task], 200);
+    }
+
     /**
      * Remove the specified resource from storage.
      */
@@ -48,5 +70,12 @@ class TaskController extends Controller
     {
         TaskService::destroy($task);
         return redirect(route('tasks.index'));
+    }
+
+    public function destroyApi(int $id)
+    {
+        $task = Task::find($id);
+        TaskService::destroy($task);
+        return response()->json([], 204);
     }
 }
