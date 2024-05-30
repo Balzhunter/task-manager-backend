@@ -17,6 +17,17 @@ export default function Index({ auth, tasks }) {
         post(route("tasks.store"), { onSuccess: () => reset() });
     };
 
+    const handleEdit = (task) => {
+        console.log(task);
+        setData({
+            title: task.title,
+            description: task.description,
+            expiration_date: new Date(task.expiration_date)
+                .toISOString()
+                .split("T")[0],
+        });
+    };
+
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Tasks" />
@@ -56,7 +67,11 @@ export default function Index({ auth, tasks }) {
                 </form>
                 <div className="mt-6 bg-white shadow-sm rounded-lg divide-y">
                     {tasks.map((task) => (
-                        <Task key={task.task_id} task={task} />
+                        <Task
+                            key={task.task_id}
+                            task={task}
+                            onEdit={handleEdit}
+                        />
                     ))}
                 </div>
             </div>
